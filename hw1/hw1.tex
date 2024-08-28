@@ -1,0 +1,153 @@
+\documentclass[11pt]{article}
+\usepackage{scribe}
+
+
+
+\date{}
+
+\begin{document}
+\title{ COSC 6324 Homework 1}
+\author{
+Due: Sep. 22, Sunday, 11.59pm  \\
+ }
+
+ \maketitle
+
+\noindent {\bf Instructions:} \\
+
+\begin{enumerate}
+\item {\bf Please submit in MS teams (one submission per group)
+and mention the contribution of each member.}
+
+\item {\bf Submit both your tex and pdf files.}
+
+\item {\bf There is a late penalty of 2\% per hour after the submission deadline. Thus after 50 hours, the assignment is worth 0 points.} Note that this rule supersedes the late penalty rule in the syllabus.
+
+\item {\bf Read the Academic Honesty policy posted in the syllabus.
+All submitted work should be  your own. Copying or using other people's work (including  from the Web) will result in $-MAX$ points, where $MAX$ is the maximum possible number of points for that assignment. Repeat offense will result in getting a failure grade in the course and reporting to the Chair. If you have any questions regarding any assignment, please contact me. The best way is to ask in Piazza}. 
+
+\item {\bf By submitting this homework, you affirm that you followed the Academic Honesty Policy.}
+
+\item {\bf  Justify your answers. Show appropriate work.} 
+
+\item {\bf Please write legibly and clearly.} 
+{\bf It is a good idea to start to work on the problems early as these generally require some time.} 
+
+\item {\bf You should use latex to type your solutions.}
+\end{enumerate}
+
+\section*{Problem 1}
+
+\begin{enumerate}
+\item You want to choose a random element among a set of $n$  elements given in an array $A$ with indices from 
+0 to $n-1$. You have access to a unbiased random coin which gives HEADS or TAILS with equal probability each time you access it. Show how to use the coin
+to select a random element in the array and prove that it yields a random element. How many coin accesses are needed? Justify your answer. 
+\item You play the following game, which consists of many rounds. In each round, you draw a random number from 1 to 100.  
+You play the game for 50 rounds. In each round, you draw a random number from 1 to 100 independently of other rounds. 
+At the end of 50 rounds, you compute the sum of all the numbers you obtained in your draws.  
+
+If this sum is a multiple of 10 then you win \$1000 dollars.  What is the probability of you winning the money?
+
+(Hint: Use the principle of deferred decisions, and consider the situation when you draw the last number.) 
+\end{enumerate}
+
+
+\section*{Problem 2} 
+
+\begin{enumerate}
+\item Assume that $n$ people are going to a concert and there are  exactly $n$ seats. 
+All the people are lined up in some arbitrary order.  Each person has a ticket that assigns
+a unique seat number.
+The first person in the line, unfortunately, has lost his ticket and does not remember his seat number.
+Hence, he is asked to take a random seat (i.e., a seat chosen uniformly
+among the 1000 seats). The rest of the people are advised to take their (own) respective seat numbers according
+to their ticket (all the rest have their tickets); if any of them finds that their assigned seat is already taken, then they are advised to choose a random seat among the (currently) unoccupied seats. What is the probability that
+the last person sits on his own seat (assigned to him in his ticket) ?
+
+
+(Hint: Let $p(n)$ be the desired probability assuming $n$ people. It is easy to compute $p(2)$. Using $p(2)$, compute $p(3)$. This will give you an idea of how to  set up a recurrence to compute $p(n)$.)
+
+\item You are given a circle of some radius and assume that 24\% of its circumference is colored blue
+and the rest is colored red.  Show that regardless of how the colors are distributed, you can {\bf always}  inscribe a square inside the circle such that
+all the vertices of the square are colored red.  (Hint: Argue using union bound.)
+\end{enumerate}
+
+\section*{Problem 3}
+
+We recall Rabin's protocol for Byzantine agreement discussed in class. In the Byzantine agreement problem there are $n = 3f+1$ processors out of which at most $f$ of them can be Byzantine (faulty). The non-Byzantine processors are called good or honest.  Each processor $i$, $1 \leq i \leq n$, starts with an input bit $b_i$. The goal of Byzantine agreement is for all processors to output a bit $o_i$
+such that the following conditions are met: (1) Agreement: $o_i$ is the same for all good processors $i$.
+(2) Validity: If the input bit is the same for all good processors, then the output bit should be equal to this input bit.
+(3) Termination: All good processors should output $o_i$ and terminate.
+
+
+Rabin's protocol assumes a trusted external party that supplies a shared random coin in each step that is available to all processors (if they need it). Note that in each step the random coin is independently generated with equal probability of being HEADS or TAILS.
+
+The protocol is as follows:
+
+
+Each processor $i$ ($1\leq i \leq n$) maintains at all rounds a vote $v_i$ which is initially equal to its input bit $b_i$. 
+
+At the start of each communication round, each processor sends its vote value $v_i$
+to every other processor. Each processor examines all $3t + 1$ values of votes
+it received (including its own). 
+Let $m_i$ be the majority bit among
+the values received by processor $i$. Let $n_i$ be the number of times the majority bit $m_i$ occurs among
+the vote values received. We note that the values of $m_i$ and $n_i$ can be different for different good processors since  Byzantine processors could try to confuse things
+by sending different values of votes to different processors.
+
+Depending upon the value of $n_i$ 
+processor $i$ does the following:
+\begin{itemize}
+\item If $n_i \geq 2f+1$: Set  $v_i = m_i$.
+\item If $n_i \leq 2f$: See the value of the shared random coin. \\ If it is HEADS then
+set $v_i = 1$, else set $v_i  = 0$.
+\end{itemize}
+
+Answer the following.
+
+\begin{enumerate}
+    \item Show that if all good processors have the same vote value in any round (i.e., $v_i $ is the same for all $i$), then in all subsequent rounds, $v_i$ will not change for any good processor (thus the vote has ``converged'').
+    \item Show that for any two processors $i$ and $j$ that have $n_i \geq 2f+1$ and $n_j \geq 2f+1$ in some round, will
+    set $v_i=m_i = m_j = v_j$ in this round. 
+    \item Using 1 and 2 above, show that the probability that all good processors set the same vote value at the end of a round is at least $1/2$.
+\item Using 3, show that if a good processor sets its output bit $o_i = v_i$ after executing $\log n$ rounds, then the Byzantine agreement will be correct with probability at least $1-1/n$.
+\item Show how the nodes can detect that an agreement has been reached and then terminate. This will make the algorithm Las Vegas (i.e., always correct). What is the expected number of rounds needed for the algorithm to terminate?
+    
+\end{enumerate}
+
+
+
+
+\section*{Problem 4}
+
+This problem occurs  when searching
+for data in a computer network. Your  network consists of $n$
+nodes (computers) and each node would like to search for a data
+item as fast as possible. Assume that searching one node takes
+constant time; thus searching $i$ nodes will take $\Theta(i)$
+time. If the data item is stored in only one (arbitrary) node
+searching for it will take $\Theta(n)$
+ time, since the searching node will have to examine at
+least half of the nodes on average to find the item. (Note that we
+assume that the searching node does not know a priori  in which
+node the item is stored.) To speed up search we can use the
+technique of {\em replication}, i.e., a data item is replicated
+and stored in $k$ ($\leq n$) different nodes. If we replicate an
+item at all the $n$ nodes then search will take only constant
+time, but this strategy is costly in terms of storage space ---
+storing at one node takes constant space for a total of  $O(n)$
+storage space. Thus there is a trade-off between search time and
+storage space. Your goal is to find a storage and search strategy
+that balances both search time and storage space: each item should
+be replicated in $\Theta(k)$ nodes, while searching for an item
+should take $\Theta(k)$ time on the average (in other words,
+$\Theta(k)$ expected time). What is the best strategy and what is
+its   $k$ value (as a function of $n$). Analyze and show that your
+strategy balances both search time and storage space.  (Hint: A
+simple randomized search strategy will work.)
+
+
+\end{document}
+
+
+
