@@ -1,0 +1,124 @@
+\hrule
+\vspace{0.1in}
+\noindent
+\textbf{Lecture Topic: }Byzantine Agreement and Verification of Matrix Multiplication \\
+\textbf{Lecture Date: }08/22/2024 \\
+\textbf{Scribe Authors: }Dhruv Trivedi, Jeremy Easton-Marks
+\vspace{0.1in}
+\hrule
+\vspace{0.1in}
+
+This lecture illustrates the Byzantine agreement problem, and touches upon verifying matrix multiplications through randomized algorithms.
+
+\section*{Byzantine Agreement}
+    \subsection*{Definition}
+        Byzantine agreement is a fundamental problem in distributed in distributed computing, where a group of parties must agree on a common value despite the possibility of some parties being malicious and attempting to mislead others. The problem was first formalized by Leslie Lamport, along with Robert Shostak and Marshall Pease in 1982.
+
+        It stems from the Byzantine generals problem, which is a metaphor to illustrate the difficulties of reaching agreement when some generals may act dishonestly or send conflicting information.
+
+    \subsection*{Protocol}
+        The aforementioned problem can be modelled for a solution using the following three-step protocol:
+
+        \begin{enumerate}
+            \item \emph{Agreement:} All honest (non-faulty) nodes must agree on the same value.
+
+            \item \emph{Validity:} If all honest nodes propose the same value, then the agreed value must be that same value.
+
+            \item \emph{Terminate:} All honest nodes must eventually make a decision, and thus terminate.
+        \end{enumerate}
+
+        Given \(n\) nodes, let \(f\) be the number of dishonest (faulty) nodes, then if \(f \geq \frac{n}{3}\), the problem cannot be solved.
+
+        Lamport provided a deterministic algorithm for \(f < \frac{n}{3}\).
+
+    \subsection*{Rabin's Protocol}
+        Rabin proposed a simple randomized algorithm which assumes that there is a global random coin that is tossed at each step, and which is visible to all nodes.
+
+        The nodes maintain at all times a bit, vote, which is initially \(b_i\) for node \(i\). At the start of each round, each node sends its vote value to every other node. Each node examines all \(3f + 1\) vote values that it receives, including its own as well. It identifies \emph{maj} as the majority bit among these vote values, and \emph{tally} as the number of times it saw this bit among the vote values.
+
+        Notice that the values of \emph{maj} and \emph{tally} can vary widely among the nodes, since a faulty node could try to disrupt ideal behavior by sending different vote values to different nodes.
+
+        \begin{algorithm}
+            \caption{Rabin's Randomized Byzantine Agreement}
+            \begin{algorithmic}[1]
+                \State \textbf{(a)} \text{If} \texttt{tally} > 2f + 1:
+                \State \quad \text{Set} \texttt{vote = maj}
+                \State \textbf{(b)} \text{If} \texttt{tally} \leq 2f + 1:\\
+                \State \quad \text{Use the global coin:}
+                \State \quad \quad \text{If it is} \texttt{HEADS}:
+                \State \quad \quad \quad \text{Set} \texttt{vote = 1} \Comment{set vote = 1 for HEADS}
+                \State \quad \quad \text{Else:}
+                \State \quad \quad \quad \text{Set} \texttt{vote = 0} \Comment{set vote = 0 for TAILS}
+            \end{algorithmic}
+        \end{algorithm}
+
+\section*{Verifying Matrix Multiplication}
+    \subsection*{Definition}
+        Verifying matrix multiplication is the process of checking whether the product of two matrices \(A\) and \(B\) equals a given matrix \(C\), i.e., \(A \cdot B = C\). This problem is crucial in various applications, such as linear algebra, machine learning, and cryptography.
+
+        The obvious deterministic method to verify a matrix product is to simply compute \(A \cdot B\) and compare it to \(C\). The runtime is \(O(n^{2.3727})\) using the Coppersmith-Winograd algorithm, or \(O(n^{2.8})\) using Strassen's matrix multiplication algorithm.
+
+        The problem can be solved using much less computational complexity with the inclusion of randomness, which can bring the computational complexity down to \(O(n^2)\).
+
+        Let us take an example where we are given three matrices \(A\), \(B\), and \(C\), each \(n \times n\), and we have to verify whether \(A \times B = C\). We choose a random binary vector \(\vect{r}\) (of size \(n \times 1\)). Mathematically, this can be represented as:
+
+        \[
+            \vect{r} = {r_1, r_2, \dots, r_n} \in \{0, 1\}^n
+        \]
+
+        Now, we can compute \(A \times (B \cdot \vect{r})\) and \(C \cdot \vect{r}\) and verify their values, which lowers the computation complexity down to \(O(n^2)\).\\
+
+        \textbf{Algorithm:}\\
+            \hspace*{10mm} if \(A \times (B \cdot \vect{r}) = C \cdot \vect{r}\)\\
+            \hspace*{20mm} \(A \times B = C\)\\
+            \hspace*{10mm} else\\
+            \hspace*{20mm} \(A \times B \ne C\)\\
+        
+        With this, let us take a look at the probability of error in the method discussed above --- we have chosen an arbitrary binary vector, i.e., \(\mathbf{r} \in \{0, 1\}^n\), which makes the probability of error:
+
+        \[
+            \Pr(A \times (B \cdot \vect{r}) = C \cdot \vect{r}) \leq \frac{1}{2}
+        \]
+
+    \subsection*{Proof of Correctness}
+        Let us take a non-zero matrix \(D\) such that \(D = (A \times B) - C \ne 0\). 
+
+        \[
+            D \cdot \vect{r} = (A \times (B \cdot \vect{r})) - (C \cdot \vect{r}) \ne 0
+        \]
+
+        Now, for \(D \cdot \vect{r}\) to be 0, ideally:
+
+        \[
+            d_1 r_1 + d_2 r_2 + \dots + d_n r_n = 0
+        \]
+
+        But \(D \ne 0\), then
+
+        \[
+            d_1 r_1 = -(d_2 r_2 + d_3 r_3 + \dots + d_n r_n)
+            \therefore r_1 = \frac{-(d_2 r_2 + d_3 r_3 + \dots + d_n r_n)}{d_1}
+        \]
+
+        Let us analyze the above result --- we infer that when we are choosing the final value of \(r_1\), the results of previous terms are already known, and they lead to two possible outcomes, i.e., either 0 or 1, out of which only one value would be correct. This is known as the principle of deferred decisions, which focuses on the last choice, while fixing the previous choices.
+
+        This result can be shown using the law of total probability, which states that:
+
+        \[
+            \begin{aligned}
+                \Pr[A] & = \sum_{i = 1}^{n} \Pr[A \bigcap E_i]\\
+                & = \sum_{i = 1}^{n} \Pr[A | E_i] \cdot \Pr[E_i]
+            \end{aligned}
+        \]
+
+        Using this, we have:
+
+        \[
+            \begin{aligned}
+                \Pr[A \times B \cdot \vec{r}] & = \sum_{(X_2, \dots, X_n) \in {0, 1}^{n - 1}} \Pr[A \times B \cdot \vec{r} \bigcap (r_2, \dots, r_n) = (x_2, \dots, x_n)]\\
+                & = \sum_{(X_2, \dots, X_n) \in {0, 1}^{n - 1}} \frac{1}{2} \Pr[(r_2, \dots, r_n) = (x_2, \dots, x_n)]\\
+                & = \frac{1}{2}
+            \end{aligned}
+        \]
+
+        Note: the algorithm may provide false-positive results, due to a one-sided error. However, since the probability of this error is \(frac{1}{2}\), we can reduce it by iterating, say \(k\), times.

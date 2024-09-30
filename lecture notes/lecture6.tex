@@ -1,0 +1,322 @@
+\hrule
+\vspace{0.1in}
+\noindent
+\textbf{Lecture Topic: } Bernoulli and Geometric Random Variables\\
+\textbf{Lecture Date: } 09/05/2024 \\
+\textbf{Scribe Authors: }Dhruv Trivedi, Jeremy Easton-Marks
+\vspace{0.1in}
+\hrule
+\vspace{0.1in}
+
+This lecture illustrates Bernoulli (indicator) random variables and geometric random variables in probability theory.
+
+\section*{Bernoulli Random Variables}
+    \subsection*{Definition}
+        A Bernoulli (or indicator) random variable is a discrete random variable that takes on only two possible outcomes:
+
+        \begin{itemize}
+            \item 0 (failure)
+            \item 1 (success)
+        \end{itemize}
+
+        It is used to model random experiments with binary outcomes, such as coin tosses, medical tests, or yes/no questions.
+
+    \subsection*{Characteristics}
+        The probability of success \((X = 1)\) is denoted by \(p\), and the probability of failure \((X = 0)\) is denoted by \(q = 1 - p\).
+
+        Bernoulli random variables are independent and identically distributed, meaning that each trial or experiment is independent of the others, and each has the same probability distribution.
+
+        The expectation of a Bernoulli random variable is given as:
+
+        \[
+            E[X] = \sum_{e \in S} \Pr[(X = i) * i]
+        \]
+
+        where \(e\) denotes individual and independent events in the sample space \(S\).
+
+    \subsection*{Example}
+        Suppose we flip a coin --- let us define success as heads, and failure as tails. In this case, the Bernoulli random variable X represents the outcomes of the coin flip, with \(p = 0.5\) (the probability of heads) and \(q = 0.5\) (the probability of tails).
+
+        Then, mathematically:
+
+        \[
+            \begin{aligned}
+                E[X] & = \frac{1}{2} \cdot p + (1 - p) \cdot 0\\
+                & = p\\
+                & = \Pr[X = tails]\\
+                & = \Pr[X = 1]\\
+                & = 0.5
+            \end{aligned}
+        \]
+
+\section*{Binomial Random Variables}
+    \subsection*{Definition}
+        A binomial random variable is a discrete random variable that represents the number of successes \((p)\) in a fixed number of independent trials \((n)\), each with a constant probability of success.
+
+        Mathematically:
+
+        \[
+            \begin{aligned}
+                B(n, p) & = \Pr[B(n, p) = i]\\
+                & = {n \choose i} \times p^i \times (1 - p)^{n - i}
+            \end{aligned}
+        \]
+
+        The expectation of a binomial variable \(B(n, p)\) can be calculated as follows:
+
+        \[
+            \begin{aligned}
+                E[B(n, p)] & = \sum_{i = 0}^{n} i \times {n \choose i} \times p^i \times (1 - p)^{n - i}
+                & = \sum_{i = 0}^{n} i \times {n \choose i} \times p^i \times (1 - p)^{n - i}\\
+                & = \sum_{i = 0}^{n} \frac{n!}{i! \cdot (n - i)!} \times p^i \times (1 - p)^{n - i}\\
+                & = \sum_{i = 0}^{n}
+            \end{aligned}
+        \]
+
+    \subsection*{Characteristics}
+        \begin{itemize}
+            \item Fixed number of trials \((n)\).
+            \item Constant probability of success \((p)\).
+            \item Two outcomes --- success or failure.
+            \item Independent trials
+        \end{itemize}
+
+    \subsection*{Applications}
+        Binomial random variables are widely used to model phenomena such as:
+
+        \begin{enumerate}
+            \item Success or failure experiments (i.e., coin tosses).
+            \item Counting the number of defects in a sample.
+            \item Modeling the number of customers arriving at a store in a given time period.
+        \end{enumerate}
+
+\section*{Geometric Random Variables}
+    \subsection*{Definition}
+        A geometric random variable is a discrete random variable that models the number of trials required to achieve the first success, given a series of independent and identically distributed Bernoulli trials with a fixed probability of success \((p)\) and failure \((q = 1 - p)\).
+
+        Mathematically:
+
+        \[
+            \Pr[G(p) = k] = (1 - p)^{k - 1} \times p
+        \]
+
+        The expectation of a geometric random variable is:
+
+        \[
+            \begin{aligned}
+                E[G(p)] & = \sum_{i = 1}^{\inf} k \times (1 - p)^{k - 1} \times p\\
+                & = \frac{1}{p}
+            \end{aligned}
+        \]
+
+    \subsection*{Characteristics}
+        \begin{itemize}
+            \item Discrete.
+            \item Independent trials.
+            \item Fixed probability of success.
+            \item Memoryless (the probability of success in the next trial does not depend on the number of previous trials).
+        \end{itemize}
+
+    \subsection*{Proof of Expectation}
+        To prove that the expectation \(E[X]\) of a geometric random variable is \(\frac{1}{p}\), we start by defining a geometric random variable.
+
+        A geometric random variable X represents the numbre of trials until the first success in a sequence of independent Bernoulli trials, each with a probability of success \(p\). Mathematically, for \(k = 1, 2, 3, \dots\):
+
+        \[
+            \Pr[X = k] = p \times (1 - p)^{k - 1}
+        \]
+
+        To find the expected value \(E[X]\), we use the definition of expectation:
+
+        \[
+            \begin{aligned}
+                E[X] & = \sum_{k = 1}^{\inf} k \times \Pr[X = k]\\
+                & = \sum_{k = 1}^{\inf} k \times (1 - p)^{k - 1} \times p\\
+                & = p \times \sum_{k = 1}^{\inf} k \times (1 - p)^{k - 1}
+            \end{aligned}
+        \]
+
+        Let us evaluate the \(\sum_{k = 1}^{\inf} k \times (1 - p)^{k - 1}\) by using the formula for the sum of a geometric series, i.e.
+
+        \[
+            S = \sum_{k = 0}^{\inf} x^k = \frac{1}{1 - x} \text{for} |x| < 1
+        \]
+
+        Differentiating both sides with respect to \(x\):
+
+        \[
+            \begin{aligned}
+                \frac{d}{dx}S & = \sum_{k = 1}^{\inf} k \times x^{k - 1}\\
+                & = \frac{1}{(1 - x)^2}
+            \end{aligned}
+        \]
+
+        Now, substituting \(x = 1 - p\):
+
+        \[
+            \begin{aligned}
+                \sum_{k = 1}^{\inf} k \times (1 - p)^{k - 1} & = \frac{1}{(1 - (1 - p))^2}\\
+                & = \frac{1}{p^2}
+            \end{aligned}
+        \]
+
+        Then, we have:
+
+        \[
+            \begin{aligned}
+                E[X] & = p \cdot \frac{1}{p^2}\\
+                & = \frac{1}{p}
+            \end{aligned}
+        \]
+
+\section*{Coupon Collector's Problem}
+    \subsection*{Definition}
+        The coupon collector's problem is a classic problem in probability theory that deals with collecting a complete set of distinct coupons when each coupon is collected randomly.
+
+        Imagine there are \(n\) different types of coupons. You collect coupons one at a time, and each coupon collected is equally likely to be any of the \(n\) types. The goal is to determine the expected number of trials needed to collect all \(n\) coupons.
+
+        Let us look at a few more concepts before solving the coupon collector's problem.
+
+    \subsection*{Balls into Bins Paradigm}
+        The balls into bins paradigm is a classic problem in probability theory with numerous applications in computer science. It involves allocating a set of balls \((m)\) into a set of bins \((n)\) in a way that minimizes the maximum load (in this case, the number of balls) in any bin.
+
+        \subsubsection*{Takeaways}
+            \begin{itemize}
+                \item Each ball is placed into one of the bins, and the bin is chosen randomly and independently of other balls.
+
+                \item The coupon collector's problem can be viewed as a special case of the balls into bins paradigm --- the coupons can be modelled as balls, with each bin representing an individual trial.
+            \end{itemize}
+
+    \subsection*{Harmonic Sum}
+        \(H_n\) is the harmonic sum which the property \(H_n = \Theta(\log(n))\), and is written as a function:
+
+        \[
+            \begin{aligned}
+                H_n & = 1 + \frac{1}{2} + \frac{1}{3} + \dots + \frac{1}{n}\\
+                & = \sum_{k = 1}^{n} \frac{1}{k}
+            \end{aligned}
+        \]
+
+    \subsection*{Solution}
+        Let X be the total number of trials needed to collect all \(n\) coupons. We can then break this down into individual stages:
+
+        \begin{itemize}
+            \item The first coupon you collect will always be new --- this takes 1 trial.
+
+            \item The probability of collecting a new coupon (given you have 1) is \(\frac{n - 1}{n}\). The expected number of trials to get a new coupon at this stage is \(\frac{n}{n - 1}\).
+
+            \item The probability of collecting a new coupon (given you have 2) is \(\frac{n - 2}{n}\). The expected number of trials here is \(\frac{n}{n - 2}\).
+
+            \item ...we can continue this until we collect all \(n\) coupons.
+        \end{itemize}
+
+        The expected number of trials to collect the \(k\)-th coupon (given you already have \(k - 1\)) is given by:
+
+        \[
+            \begin{aligned}
+                E[T_k] & = \frac{n}{n - (k - 1)}\\
+                & = \frac{n}{n - k + 1}
+            \end{aligned}
+        \]
+
+        Thus, the total expected number of trials \(E[X\) to collect all \(n\) coupons is:
+
+        \[
+            \begin{aligned}
+                E[X] & = E[T_1] + E[T_2] + \dots + E[T_n]\\
+                & = n \times \left(\frac{1}{n} + \frac{1}{n - 1} + \frac{1}{n - 2} + \dots + \frac{1}{1}\right)
+            \end{aligned}
+        \]
+
+        The sum inside the parentheses is the \(n\)-th harmonic number, denoted as \(H_n\):
+
+        \[
+            H_n = 1 + \frac{1}{2} + \frac{1}{3} + \dots + \frac{1}{n}
+        \]
+
+        Therefore, we have:
+
+        \[
+            E[X] = n \cdot H_n
+        \]
+
+\section*{Randomized quicksort}
+    \subsection*{quicksort}
+        \subsubsection*{Definition}
+            quicksort, originially proposed by C. A. R. Hoare, is a widely used sorting algorithm that follows the divide-and-conquer paradigm. It is known for its efficiency and simplicity, making it a popular choice in practice.
+
+        \subsubsection*{Working}
+            \begin{enumerate}
+                \item Choose a pivot (in this case, the first element).
+                \item Partition the array such that:
+                \begin{itemize}
+                    \item All elements less than the pivot are on its left,.
+                    \item All elements greater than the pivot are on its right.
+                    \item The pivot is in the middle.
+                \end{itemize}
+                \item Recursively apply the above steps to the left and right subarrays made during the partition.
+            \end{enumerate}
+
+        \subsubsection*{Analysis}
+            In practice, quicksort achieves an average-case computational complexity of \(O(n \cdot \log(n))\), which is equivalent to the worst-case complexity of mergesort. However, quicksort can be exploited by an adversary by giving a bad input, i.e., if the input is sorted in the reverse order, or if it is already sorted --- this will increase the computational complexity to \(O(n^2)\).
+
+            To avoid this, we can randomly select the pivot, thus minimizing the chances of getting a bad split.
+
+    \subsection*{Randomized quicksort}
+        \subsubsection*{Definition}
+            Randomized quicksort, as the name suggests, is a variant of the classic quicksort algorithm that improves its performance by selecting a pivot at random. This approach helps to mitigate the worst-case performance scenarios often associated with Quicksort, such as when the input is already sorted or nearly sorted.
+
+        \subsubsection*{Working}
+            \begin{enumerate}
+                \item Randomly choose a pivot.
+                \item Partition the array such that:
+                \begin{itemize}
+                    \item All elements less than the pivot are on its left,.
+                    \item All elements greater than the pivot are on its right.
+                    \item The pivot is in the middle.
+                \end{itemize}
+                \item Recursively apply the above steps to the left and right subarrays made during the partition.
+            \end{enumerate}
+
+        \subsubsection*{Analysis}
+            The expected number of comparisons \(T\) can be modelled as a random variable and be bounded in the range \([c \cdot n \cdot \log(n), \overline{c} \cdot \frac{n \cdot (n - 1)}{2}\) or \([c \cdot n \cdot \log(n), \overline{c} \cdot n^2\), where \(c\) and \(\overline{c}\) are assumed to be constants, while the expected number of comparisons is \(E[T] = O(n \cdot \log(n)\).
+
+            Let us define \(X_{s_i, s_j}\) which denotes that a variable \(s_i\) has been compared with a variable \(s_j\). Then, the number of comparisons made can be given as:
+
+            \[
+                T = \sum_{i = 1}^{n} \sum_{s_j > s_i} X_{s_i, s_j}
+            \]
+
+            Since we wish to prove \(E[T] = O(n \cdot \log(n)\), we consider \(E[T]\) using linearity of expectations:
+
+            \[
+                \begin{aligned}
+                    E[T] & = E[\sum_{i = 1}^{n} \sum_{s_j > s_i} X_{s_i, s_j}]\\
+                    & = \sum_{i = 1}^{n} \sum_{s_j > s_i} E[X_{s_i, s_j}]\\
+                    & = \sum_{i = 1}^{n} \sum_{s_j > s_i} \Pr[X_{s_i, s_j} = 1]
+                \end{aligned}
+            \]
+
+        We examine the probability of whether \(s_i\) and \(s_j\) are compared. This only happens in the case that there is a pivot chosen between the values represented by \(s_i\) and \(s_j\) at value \(s_k\) where \(s_i < s_k < s_j\). Thus the probability that a pivot is chosen between these two points is:
+
+        \[
+            \Pr[X_{s_i, s_j} = 1] = \frac{2}{s_j - s_i + 1}
+        \]
+
+        With this in hand we can solve for the expected value of \(E[T]\):
+
+        \[
+            \begin{aligned}
+                E[T] & = \sum_{i = 1}^{n} \sum_{j > i} \Pr[X_{i, j} = 1]\\
+                & = \sum_{i = 1}^{n} \sum_{j = i + 1}^{n} \frac{2}{j - i + 1}\\
+                & = \sum_{i = 1}^{n} \sum_{k}^{n - i + 1} \frac{2}{k + 1}\\
+                & \leq \sum_{i = 1}^{n} \sum_{k = 1}^{n} \frac{2}{k}\\
+                & = \sum_{i = 1}^{n} \sum_{k = 1}^{n} \frac{2}{k}\\
+                & = 2 \sum_{k = 1}^{n} \sum_{i = 1}^{n} \frac{1}{k}\\
+                & = 2 \sum_{k = 1}^{n} \frac{1}{k} \sum_{i = 1}^{n} 1\\
+                & = 2n \sum_{k = 1}^{n} \frac{1}{k}\\
+                & = 2n \times H_n\\
+            \end{aligned}
+        \]
+
+        where \(2n \times H_n\) is the upper bound for worst-case expected computation time for randomized quicksort.

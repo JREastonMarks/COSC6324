@@ -1,0 +1,69 @@
+\hrule
+\vspace{0.1in}
+\noindent
+\textbf{Lecture Topic: } TOPIC\\
+\textbf{Lecture Date: } 08/29/2024 \\
+\textbf{Scribe Authors: }Dhruv Trivedi, Jeremy Easton-Marks
+\vspace{0.1in}
+\hrule
+\vspace{0.1in}
+
+\section*{Naive Bayes Classifier}
+Used for email/spam filtering
+
+Emails are classified in two ways
+\begin{itemize}
+    \item $Pr(\text{D  is spam} | D = (X_1,X_2,...X_n)) $
+    \item $ Pr(\text{D is not spam} | D = (X_1,X_2,...X_n)) $
+\end{itemize}
+where emails are $D = (X_1, X-2,... X_\infty)$.
+
+This give us an overall probability of
+\[
+\begin{aligned}
+Pr(A | B) & = \frac{Pr(B | A) Pr(A)}{Pr(B)} \\
+Pr(\text{D is spam} | D = (X_1,X_2,...X_n)) & = \frac{Pr(D = (X_1,X_2,...X_n) | \text{D is spam})Pr(\text{D is Spam})}{Pr(D = (X_1,X_2,...X_n)}
+\end{aligned}
+\]
+
+
+Paul Graham
+$Pr(D \text{is spam})$ = percentage of spam messages
+
+$D=(X_1,X_2,...X_n)$ where all $X_n$ are independent.
+
+Therefor the overall probability is:
+\[
+\prod_{i = 1}^{n} Pr(X_i = X_i | \text{D is spam})(Pr(\text{D is spam}))
+\]
+
+If we assume that $E_1...E_n$ are mutually exclusive then:
+\[
+Pr(\cup_{i=1}^{n} E_i) = \sum_{i=1}^{n} Pr(E_i)
+\]
+
+\section*{Ramsey Theory}
+Example of Probabilistic Combinations \\
+Ramsey Theory -> Can you find order in large numbers
+
+$R(3,3) \geq 6$
+$R(4, 4) = 18$
+$R(5, 5) = ???$
+
+\section*{The Probabilistic Method}
+
+\[
+\begin{aligned}
+R(k, k) & \geq k2^{\frac{k}{2}} \\
+2^{\frac{1}{2}^{k \atop 2}} & = 2^{1 - {k \atop 2}}
+\end{aligned}
+\]
+
+
+\section*{Monochromatic Subgraphs in Ramsey Theory}
+
+$Pr(\text{All} k \text{ subsets are chromochchromatic}) \geq ( {n \atop k} )2^{1-({k \atop k})} < 1$
+
+$({n \atop k})\frac{2}{2 {n \frac{k}{2}}} \geq 1$
+
+

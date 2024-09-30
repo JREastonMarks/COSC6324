@@ -1,0 +1,149 @@
+\hrule
+\vspace{0.1in}
+\noindent
+\textbf{Lecture Topic: }Introduction to Randomized Algorithms and Probabilistic Principles \\
+\textbf{Lecture Date: }08/20/2024 \\
+\textbf{Scribe Authors: }Dhruv Trivedi, Jeremy Easton-Marks
+\vspace{0.1in}
+\hrule
+\vspace{0.1in}
+
+This lecture introduces the notion of randomized algorithms and reviews some basic concepts of probability theory.
+
+\section*{Randomized Algorithms}
+    \subsection*{Definition}
+        A randomized algorithm is an algorithmic paradigm that incorporates randomness as a part of its logic. In other words, one may represent randomized algorithms as a combination of deterministic algorithms and random choices.
+            
+        Randomized algorithms are simpler and better than deterministic algorithms, and are hence employed to reduce either the time complexity or the space complexity of an algorithm.
+
+        It is worth noting that while deterministic algorithms follow a fixed set of computations under a fixed time for a particular input, randomized algorithms may differ at each step for a particular input, owing to their random nature.
+
+    \subsection*{Uses}
+        The purpose of randomized algorithms is to foil the adversary, i.e., they are particularly useful when faced with a malicious adversary or attacker who deliberately tried to feed a bad input to the algorithm.
+
+        Notable applications of randomized algorithms include, but are not limited to, quicksort (can be executed in $O(nlogn)$ if the pivot elements are selected uniformly at random), and Min cut (Karger's algorithm), apart from its usage in cryptography and quantum computing.\\
+
+        Other examples mentioned in class:
+            \begin{itemize}
+                \item Grover's quantum algorithm, which optimizes the computational complexity of linear search from \(O(n)\) to \(O(\sqrt{n})\).
+
+                \item The primality checking algorithm, as proposed by Miller-Rabin, which has a computational complexity of \(O(k \cdot \log(n)\).
+            \end{itemize}
+
+    \subsection*{Types}
+        \begin{enumerate}
+            \item \textbf{Las Vegas algorithms: }Introduced by Laszlo Babai in 1979, these algorithms are guaranteed to produce correct results, however, with varying runtime.
+
+            \item \textbf{Monte-Carlo algorithms: }These algorithms are the opposite of Las Vegas algorithms --- they are guaranteed to have a definite runtime, however, their result may vary, i.e., have a probability of error. This probability of error can be minimized by iterating the algorithm multiple times.
+
+            \item \textbf{Atlantic City algorithms: }This type of algorithm lies in the middle of Las Vegas and Monte-Carlo algorithms --- it is almost always fast, and almost always correct. Very few Atlantic City algorithms exist, as designing them is a complex process.
+        \end{enumerate}
+
+\section*{Probabilistic Principles}
+    Probability is the branch of mathematics concerning events and numerical descriptions of how likely they are to occur. The probability of an event is number between 0 and 1; the larger the probability, the more likely an event is to occur. Let us look at some terminology about probability theory, so as to get a better understanding of the concepts of probabilistic principles.
+
+    \begin{itemize}
+        \item \textbf{Experiment: }A trial or an operation conducted to produce an outcome is called an experiment.
+        \textit{Example: Flipping a coin.}
+
+        \item \textbf{Sample Space: }All the possible outcomes of an experiment together constitute a sample space \(\Omega\).
+        \textit{The sample space, when flipping a coin, is \{Heads, Tails\}.}
+
+        \item \textbf{Event: }An event \(\mathcal{E}\) is a subset of the sample space.
+
+        \item \textbf{Mutual Exclusion: }Two events \(A\) and \(B\) are considered to be mutually exclusive if:
+            \[
+                A \cap B = \emptyset
+            \]
+
+        \item \textbf{Independent Events: }If events \(A\) and \(B\) are to be independent, then:
+            \[
+                \Pr(A \cap B) = \Pr(A) \times \Pr(B)
+            \]
+    \end{itemize}
+
+    With this, let us now formally define the probability distribution function $\Pr$.
+        
+    \begin{theorem}[Probability Distribution Function]
+        A probability distribution function on a discrete sample space \(\Omega\) is a function from events of $\Omega$ to $\mathbb{R}$, such that:
+
+        \begin{enumerate}
+            \item $0 \leq \prob{E} \leq 1$ for any event $E$.
+            \item $\prob{\Omega} = 1$, where $\Omega$ is the sample space.
+            \item The probability for a given (countable) sequence of pairwise disjoint events $E_1, E_2, \dots, E_i$ is:
+                \[
+                    \Pr\left(\bigcup_{i \geq 1} E_i\right) = \sum_{i \geq 1} \Pr(E_i)
+                \]
+        \end{enumerate}
+    \end{theorem}
+
+\section*{Example}
+    Let us now look at an example.
+
+    We are given an array \(A\) of \(n\) items, out of which \(\frac{n}{2}\) items are unique, and the remaining \(\frac{n}{2}\) items are duplicates.
+    
+    \[
+        0 \quad 1 \quad 2 \quad \dots \quad n - 1
+    \]
+    
+    The task at hand is to find two duplicate items in array \(A\). To solve this problem using a randomized algorithm, we can employ random sampling.
+
+    \begin{enumerate}
+        \item Sample two random numbers, say, \(r_1\) and \(r_2\), such that \(0 \leq r_1, r_2 < n\) and \(r_1 \neq r_2\).
+
+        \item Mathematically, this can be written as \(r_i = \text{random}(0, n - 1)\) where \(i = \{1, 2\}\).
+    \end{enumerate}
+
+    To check the efficiency of this approach, let us calculate the probability of success, i.e.,
+
+    \[
+        \Pr_{success} = \Pr(A[r_1] = A[r_2] \land r_1 \neq r_2)
+    \]
+
+    Probability, in general, can be viewed as a mapping of events from the sample space to numeric values. In this case, the sample space \(S\) consists of \(n\) items of the array \(A\), which are uniformly mapped to \(\frac{1}{n}\). Let us redistribute the sample space into unique pairs of random samples, say, \((r_i, r_j)\) --- this would then map the elements to \(\frac{1}{n^2}\) (where all events are assumed to be independent).
+
+    The probability $\Pr$ can then be calculated as:
+
+    \[
+        \Pr = \frac{\frac{n}{2} \times \left(\frac{n}{2} - 1\right)}{n^2}
+    \]
+
+    which can be further simplified to:
+
+    \[
+        \Pr = \frac{1}{4} - \frac{1}{2n} \quad (\text{where } n \geq 3)
+    \]
+
+    With \(n = 3\), the success rate of the randomized algorithm becomes \(\frac{1}{12}\).
+
+    As evident, the probabilistic failure rate of the algorithm is \(\frac{11}{12}\). To achieve a higher probabilistic success rate, we must focus on minimizing the probabilistic failure rate. This can be achieved through repetitions, which would then exponentially bring down the probabilistic failure rate.
+
+    Let \(k\) be the number of repetitions required. The probabilistic failure rate after \(k\) repetitions would be \(\left(\frac{11}{12}\right)^k\). To achieve high probability of success, let us assume \(k\) as \(C \cdot \log_{2}n\), where \(C\) is a constant and \(n\) is the number of items in the array \(A\).
+
+    Then,
+
+    \[
+        \Pr_{\text{(failure after } k \text{ repetitions)}} = \left(\frac{11}{12}\right)^k
+    \]
+
+    Substituting the value of \(k\), we get:
+
+    \[
+        \Pr_{\text{(failure after } k \text{ repetitions)}} = \left(\frac{11}{12}\right)^{C \cdot \log_{2}n}
+    \]
+
+    We know that \(a^{\log_{2}b} = b^{\log_{2}a}\), therefore:
+
+    \[
+        \Pr_{\text{(failure after } k \text{ repetitions)}} = n^{C \cdot \log_{2} \left(\frac{11}{12}\right)}
+    \]
+
+    Upon further simplification, we have:
+
+    \[
+        \Pr_{\text{(failure after } k \text{ repetitions)}} = \frac{1}{n^{C \cdot \log_{2} \left(\frac{12}{11}\right)}}
+    \]
+
+    Thus, to achieve the desired level of success probability, the optimal number of repetitions \(k\) can be determined by substituting \(C\) as \(\frac{1}{\log_{2} \left(\frac{12}{11}\right)}\).
+    
+    This approach ensures that the probabilistic failure rate is minimized, thus enhancing the overall effectiveness of the randomized algorithm.

@@ -1,0 +1,147 @@
+\hrule
+\vspace{0.1in}
+\noindent
+\textbf{Lecture Topic: } \\
+\textbf{Lecture Date: } 09/10/2024 \\
+\textbf{Scribe Authors: }Dhruv Trivedi, Jeremy Easton-Marks
+\vspace{0.1in}
+\hrule
+\vspace{0.1in}
+
+\section*{Continuation of Quicksort and Radomized Quicksort}
+
+\begin{itemize}
+    \item E[components] = $\bigO{n\log_2 n}$ 
+    \item QS -> First element $\bigO(n^2$
+    \item RQS -> Random pivot $\bigO(n\log_2n)$
+
+\end{itemize}
+
+\section*{Probabilistic Analysis vs Randomized}
+Much of science and engineering is Probabilistic Analysis. AKA average case analysis. Assume distribution on input.
+
+For sorting: we can make a simple Assumption that we can look at an look at possibase average case and compute average. Given $F$ inputs -> $F={i_1,i_2,...i_n}$.
+
+\[
+\frac{\sum_{j=1}^{|F|} alg(i_j)}{|F|} = \bigO{n \ln n}
+\]
+
+\textbf{An example}
+Given $n!$ inputs for sorting where n is the size of the list. How do we prove this?
+
+\[
+\frac{\sum_{j=1}^{|F|} alg(i_j)}{n!} = \bigO{n \ln n}
+\]
+
+Random Variable $T$ = number of combinations in the QS on a random permeation
+
+
+\[
+\begin{aligned}
+T & = \sum_{i=1}^{n}\sum_{j=i+1}^{n}X_{ij} \\
+Pr & = (\frac{2}{j-i+1})
+\end{aligned}
+\]
+
+\[
+\begin{aligned}
+E[T] & = \sum_{i=1}^{n}\sum_{j=i+1}^{n}E[X_{ij}] \\
+E[T] & = \sum_{i=1}^{n}\sum_{j=i+1}^{n}Pr(X_{ij}=1) \\
+E[T] & = \sum_{i=1}^{n}\sum_{j=i+1}^{n}(\frac{2}{j-i+1}) \\
+E[T] & = \sum_{i=1}^{n}\sum_{j=i+1}^{n}(\frac{2}{j-i+1}) = 2nHn \\
+E[T] & = \sum_{i=1}^{n}\sum_{j=i+1}^{n}(\frac{2}{j-i+1}) = \bigO{n \ln n}\\
+\end{aligned}
+\]
+
+
+
+The randomization is due to algorithms instead of inputs
+
+\section*{Las Vegas and Monte Carlo Quick Review}
+\textbf{Las Vegas}
+\begin{itemize}
+    \item Output is always is correct
+    \item Run time can change (r.v.)
+\end{itemize}
+
+\textbf{Monte Carlo}
+\begin{itemize}
+    \item Output can be wrong
+    \item Find or vriable run time (r.v.)
+    \item Goal to borad wrong
+    \item Many M.C. can be made L.V. typically here one sided error
+    \item binary outputs
+    \item Two sided error
+\end{itemize}
+
+\section*{Maximum Independent Set}
+Parallel or Distribution Computing
+
+\textbf{Independent Set}: Given a graph with subset of nodes that are independent (aka not adjacent)
+
+\textbf{Maximal}: is an independent set and cannot have another node added. Maximum is maximal but not inverse
+
+\section*{Greedy algorithm for MIS}
+$\bigO{m+n}$
+
+\textbf{Basic Idea:}
+\begin{itemize}
+\item Repeat until none are remaining
+\item Pick random node
+\item Delete neighbors
+\end{itemize}
+
+Distributed Find Maximal
+- In each round can calculate if independent set or not
+
+
+\section*{Luby's algorithm}
+Simple Algorithm requiring $\bigO{\log n}$ rounds when randomized. $\bigO{\log^2 n}$ when pseudorandom.
+
+Starts with randomization and makes it less random
+\begin{itemize}
+\item $n$ -> nodes
+\item $m$ -> edges
+\end{itemize}
+
+\begin{algorithm}[H]
+    \caption[\AlgName{lubysAlgorithm}]{\AlgName{Luby's Algorithm}
+        \AlgInput{A graph $g$}
+        \AlgOutput{The minimum indepedent set (MIS)}}\label{alg:lubysAlgorithm}
+    \begin{algorithmic}[1]
+        \Function{LybyMIS}{$G$}
+        \LComment{Send RAM number to neighbors}
+        \LComment{Exchange ranks with neighbors}
+        \LComment{Min Rank Adde}
+        \LComment{All neighbors delete the edges where $m \leq ({n \atop 2}) rounds$}
+        \LComment{Repeat until $d(v) = $ number of neighbors (degrees)}
+    \end{algorithmic}
+\end{algorithm}
+
+Expected number of edges after deletion with $\frac{M}{2}$ is the goal
+\[
+\sum \frac{1}{d(v) + 1} \geq \frac{M}{2}
+\] \\
+
+$u$ is eligible to work $v$
+
+$u$ has the min rank in $N(u)$ and $n(V)$
+
+$X(u \rightarrow v)$ then u is eligible with respect to v
+
+\[
+\frac{d(v)}{d(v) + d(u}
+\]
+
+Total number of directed edges for $\forall u \rightarrow v, v \rightarrow u$
+
+\[
+\begin{aligned}
+    E[x(u \rightarrow v) & + x(v \rightarrow u)] \\
+    E[x(u \rightarrow v)] & + E[x(v \rightarrow u)] \\
+    \sum \frac{d(v)}{d(u) & + d(v)} + \sum \frac{d(u)}{d(v) + d(u)} \\
+    & \sum 1 \\
+    & \geq m \\
+    & \geq \frac{m}{2}
+\end{aligned}
+\]

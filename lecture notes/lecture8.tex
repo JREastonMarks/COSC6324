@@ -1,0 +1,109 @@
+\hrule
+\vspace{0.1in}
+\noindent
+\textbf{Lecture Topic: } \\
+\textbf{Lecture Date: } 09/12/2024 \\
+\textbf{Scribe Authors: }Dhruv Trivedi, Jeremy Easton-Marks
+\vspace{0.1in}
+\hrule
+\vspace{0.1in}
+
+\section*{Conditional Expected Probability/Variables}
+\[
+E[x|Y=y] = \sum x * Pr(X=x|Y=y)
+\]
+where $x = $range of $X$
+
+Given a random variable then
+\[
+E[x|y] = f(y)
+\]
+Where the random variable is a function of y then
+
+\[
+f(y) = f(Y=y)
+\]
+
+\textbf{Formula of conditional expectations}
+\[
+E[E(x|y)]=E[f(y)]=E[X]
+\]
+
+
+\textbf{Example}
+$x_1$ and $x_2$ are both six sided dice and $x = x_1 + x_2$
+
+\[
+Pr(X=x|x_1)
+\]
+then
+\[
+\begin{aligned}
+E(X|x_1) = f(x1)=\sum_{X=x_1+1}^{X=x_1+6} x_i \\
+=\sum_{X=x_1+1}^{X=x_1+6} x_i * \frac{1}{6} \\
+= \frac{1}{6}(x_1 + x_2 + ... + X_1+6) \\
+x_1 = \frac{7}{2}
+\end{aligned}
+\]
+\[
+E[x_1 + \frac{7}{2}] = E(x_1) + \frac{7}{2} + \frac{7}{2} = 7
+\]
+
+\section*{Geometric Random Variables (again)}
+Geometric Distribution is the number of times until success $x ~ G(p)$
+
+\[
+\begin{aligned}
+    E[x] = \frac{1}{p} \\
+    E[x] = \sum_{i=1}^{\infty} i Pr(x=i) \\
+    E[x] = \sum_{i=1}^{\infty} i (1 - p)^{i-1}p
+\end{aligned}
+\]
+
+\[
+\begin{aligned}
+E[x | x_i] & = E[x|x_i=0]Pr(X_i=0) + E[x|x_i=1]Pr(X_i=1) \\
+E[x | x_i] & = E(x|x_i=0)(1-p)+p \\
+E[x | x_i] & = E[1+x|x_i=0](1-p) + p \\
+E[x | x_i] & = (1 + E[x|x_i=0])(1-p) + p \\
+E[x | x_i] & = 1 + E[x])(1-p) + p \\
+E[E[x | x_i]] & = E(1+E[X])(1-p) + p \\
+E[x]&  = (1-p) + (1-p)E[x] + p \\
+E[x] - E[x] + p[E[x]] & =1 \\
+E[x] & = \frac{1}{p}
+\end{aligned}
+\]
+
+\section*{Markov and Deviation Inequality}
+Basic inequality, probabilistic distribution from random variable $x \geq 0$
+\[
+Pr(x \geq a) \leq \frac{E[x]}{x}
+\]
+therefore
+\[
+Pr(x \geq k E[x]) \leq \frac{1}{k}
+\]
+
+\textbf{Proof}
+$I = 1$ if $x \geq 0$ otherwise $0$
+
+\[
+\begin{aligned}
+    I = \frac{x}{a} \\
+    E[I] = E[\frac{x}{a}] \\
+    Pr(x\geq a) \leq \frac{1 E[x]}{a}
+    
+\end{aligned}
+\]
+
+Revisiting Luby's algorithm
+
+\[
+\begin{aligned}
+E[x_i | x_i - 1] \leq \frac{x_i - 1}{2} \\ 
+E[E[x_i | x_i - 1]] \leq \frac{1}{2} E[x_i - 1] \\
+E[x_i] \leq \frac{1}{2} E[x_i - 1] \\
+E[x_i] \leq \frac{1}{2}n E[x_i-2] \\
+E[x_i] \leq \frac{m}{2}
+\end{aligned}
+\]
