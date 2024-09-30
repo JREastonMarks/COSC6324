@@ -1,0 +1,147 @@
+\hrule
+\vspace{0.1in}
+\noindent
+\textbf{Lecture Topic:} Random Variables and Expected Values \\
+\textbf{Lecture Date:} 09/03/2024 \\
+\textbf{Scribe Authors:} Dhruv Trivedi, Jeremy Easton-Marks
+\vspace{0.1in}
+\hrule
+\vspace{0.1in}
+This lecture illustrates random variables and expected values in probability theory.
+\section**{Random Variables}
+\subsection**{Definition}
+
+The likelihood of obtaining a particular value based on an event that occurs with some probability is represented by a random variable. When we have a sample space \(S\), and events \(E \in S\), then a random variable X is a function that takes these events and maps them to specific numerical values, say \(r\) in range R. Notably, each value \(r\), 
+has a distinct probability \(\Pr(r)\). 
+
+If we want to compute the probability that a X takes on the value \(r\), for each event \(e \in S\) we can do so by:
+\[
+\Pr(X = r) = \sum{e\in S:x(e)=r}Pr(e)
+\]
+
+We had discussed an example of rolling a standard six-sided die, where the amount of money we win is decided by the number that appears on the die. Say, we get a 1, then we win \(\$10\) dollars, \(\$20\) if we roll a 2, and so on.
+
+In this case, the outcome of our die roll is the event \(e\), and the amount of money we win is the value \(r\), that is linked with each event. The random variable X mapes each event to the specific amount we win. Say:
+\[
+X(1) = 10
+\]
+
+Now, we can use this to compute the probability of winning \(\$50\) dollars. So:
+\[
+\Pr(X = 50) = \Pr(rolling a 5) = \frac{1}{6}
+\]
+
+Similarly, random variables have varied applications in complex problems.
+
+
+
+\subsection**{Expected Values}
+We can calculate the mean or the weighted average of the random variables. This is known as \textbf{Expectation}. 
+
+\begin{definition}
+    One can represent the expectation of a random variable X by:
+
+    \[
+    \expectation(X) = \sum_i i \cdot \Pr(X = i)
+    \]
+where i represents all different values of X.
+\end{definition}
+
+\newpage
+
+For instance, when we roll a fair die, we can determine the expected value of the outcome as follows:
+
+\[
+E[X] = \sum_{r \in R} Pr(x=r)*r = \sum_{i=1}^{6} i*\frac{1}{6} = \frac{1}{6} *\sum_{i=1}^{6} i
+\]
+\[
+= \frac{1}{6} \cdot \frac{6 \cdot (6-1)}{2}
+\]
+\[
+= \frac{7}{2} = 3.5
+\]
+
+Rolling a 3.5 on a die may be impossible, but this represents the average outcome.
+
+\section*{Law of Large Numbers}
+The law of large numbers describes the behaviour of averages of large numbers of independent and identically distributed random variables. There are two versions of it: Strong and Weak. 
+% \subsection*{Strong law of large numbers}
+
+The Strong Law of large numbers states that as the number of trials increase, the sample's mean will converge almost to that of the true population's mean. It is very closely related to the Central Limit Theorem, which states that for a large number of samples, the sample mean follows a normal distribution approximately.
+
+
+The Weak law of large numbers states that the sample's mean converges to the true mean of the population, instead of the almost convergence.
+
+\section*{Linearity of Expectations}
+One of the significant properties of expectation is Linearity. This property states that the expectation of the sum of random variables is mathematically equal to the sum of their individual expectations.
+
+\begin{theorem}[Linearity of Expectations: ]
+    If we have a finite set of discrete random variables, with their expectations, then:
+    \[
+    E[\sum_{r=1}^{\n} X_r] = \sum_{r=1}^{\n} E[X_r]
+    \]
+\end{theorem}
+
+We will be using this property in out next problems.
+
+
+
+\subsection*{Example: Random Jacket selection}
+\textbf{Problem Statement:}
+
+Suppose we have \(n\) people, and \(n\) jackets. Each person gets a random jacket, what is the expected number of people who got back their own jacket?
+
+Solving this by calculating the probability of each possible number of people getting their own jacket becomes very complicated. However linearity of expectation helps us simplify it.
+
+Let a random variable \(X\) be the number of people who got back their jacket. X can take only binary values so:
+
+\(x_i = 1, \) if the \(i^{th}\) person gets his jacket
+\(X_i = 0\) otherwise.
+
+So X becomes:
+\[
+X = x_1 + x_2 + .... + x_n
+\]
+
+We apply linearity of expectation and get:
+\[
+\expectation(x) = \expectation(x_1) + \expectation(x_2) + .... + \expectation(x_n)
+\]
+
+The probability that a person i receives his jacket is \(\frac{1}{n}\).
+
+Thus, the expected value of \(x_i\) is:
+\[
+\expectation(x_i) = \Pr(x_i = 1) = 1 \cdot \frac{1}{n} \frac{1}{n}.
+\]
+
+Summing up these individual expectations we get:
+\[
+\expectation(X) = \sum_{i=1}^n \expectation(x_i) =\sum_{i=1}^n = n \cdot \frac{1}{n} = 1
+\]
+
+Thus the expected number of people who receive their jacket is 1.
+
+\subsection*{Max Cut}
+We studied the min-cut problem in the previous lectures, so the max-cut is very similar to that. The key difference is the we need to maximize the number of edges between two parts of the graph instead of minimizing them. This problem is considered as NP-complete, meaning that there is no known polynomial-time algorithm to find the exact solution. 
+
+But, we can find the lower bound of a max cut, that means we can show that there is always a way to split the graph in such a way that at least half of the edges are between the two sets. We will be using linearity of expectation to prove so.
+
+\begin{algorithm}
+\caption{Max Cut}
+\begin{algorithmic}
+\begin{enumerate}
+    \item Consider two sets A and B. Each node in the graph will be randomly assigned a set by flipping a coin, with probability of \(\frac{1}{2} \) of being placed in either of the set.
+    \item Define bernoulli random variables for each edge \(i \in E\) connecting two nodes. Set \(X_i\) to 1 if edge i connects a node in A to B, or else set 0.
+    \item. Since each node is randomly assigned, the expected value of X, i.e. the probability that edge connects across the sets is \(\frac{1}{2}\).
+    \item Apply linearity of expectation to derive the proof.
+
+\end{enumerate}   
+\end{algorithmic}
+\end{algorithm}
+
+\[
+E[X] = E[x_1+x_2+...+x_m ] = E[x_1]+E[x_2]+...+E[x_m] = m*\frac{1}{2} = \frac{m}{2}
+\]
+
+Thus, by using this approach, we can show that the number of edges between the two sets is at least \(\frac{m}{2}\).

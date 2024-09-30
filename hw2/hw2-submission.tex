@@ -1,0 +1,206 @@
+\documentclass[11pt]{article}
+\usepackage{scribe}
+
+
+
+\date{}
+
+\begin{document}
+\title{ COSC 6324 Homework 1}
+\author{Jeremy R. Easton-Marks, Dhruv Jitendra Trivedi \\
+ }
+
+ \maketitle
+
+\section*{Contributions}
+Both the authors have contributed equally, along side thoroughly reviewing and refining each others' work.
+
+In particular:
+\begin{itemize}
+    \item \emph{Jeremy R. Easton-Marks} has worked on problems 
+    \item \emph{Dhruv Jitendra Trivedi} has worked on problems 
+\end{itemize}
+
+\section*{Problem 1}
+
+
+Given an undirected graph $G=(V,E)$, an independent set $I$ is a subset of $V$ such that no two nodes
+in the subset have an edge between them. Finding  independent sets of large size is an important algorithmic problem;
+finding one of the largest size is an NP-hard problem with no known polynomial time algorithm.
+\begin{enumerate}
+\item Show that every graph has an independent set of size at least $ \alpha = \sum_{v \in V}\frac{1}{d(v)+1}$
+where   $d(v)$ is the degree of node $v$. (Hint: Use  the probabilistic method and the linearity of expectation.)
+
+    \textbf{Answer:}
+
+\item Give a Las Vegas randomized polynomial time algorithm to {\em output} an independent set of size at least $\alpha$ as defined above.
+In particular, your algorithm should output such an independent set in {\em expected} polynomial time, i.e., polynomial
+in $n$ and $m$, where $n$ and $m$ are the total number of nodes and edges respectively. Analyze the expected run time of your algorithm and show that it is polynomial in $n$ and $m$.
+
+(Hint: This problem is similar to the Maximum Cut problem we discussed in class. See Section 8.7 of my algorithms textbook.)  
+
+    \textbf{Answer:}
+\end{enumerate}
+
+
+\section*{Problem 2} 
+Assume you throw a  6-sided die (each side has a equal probability of showing up) many times (each throw is independent of the rest).
+For all the problems below, give arguments that justify your answers.
+\begin{enumerate}
+\item What is the expected number of throws
+till you see 1 and 2 one after the other successively (i.e., ``12'').  
+
+    \textbf{Answer:}
+    
+\item What is the expected number of throws till you see a 1 and a 2 together (i.e., either ``12" or ``21").  (Hint: The answer is {\em not} 36.  Use conditional expectation by conditioning on the first throw and then the second throw. You might do a quick simulation to verify your answer for sanity check. But note that simulation is not a valid justification.)
+
+    \textbf{Answer:}
+    
+\item What is the expected number of throws till you see a 1  {\em conditioned} on the event that all throws gave odd numbers.
+Note that you count the last throw also (that shows 1). (Hint: The answer is {\em not} 3. The answer can be obtained by a correct conditioning argument. Let r.v. $X$ denote the number of throws of a fair die needed to  get 1 (including 1).
+ Let r.v. $Y$ denote the number of throws of a fair die needed to get an even number.
+We need to compute  $E[X|Y > X]$.)
+
+    \textbf{Answer:}
+    
+\end{enumerate}
+
+
+\section*{Problem 3}
+
+We want to compute the annual per capita income of a country, which we define as the average annual income among
+all persons living in the country. Since it is difficult to exactly compute this, we estimate this quantity by random sampling.
+
+We want our estimate to satisfy a confidence interval of $1-\delta$ with a margin of (relative) error $\epsilon$,
+where $\delta > 0$ and $\epsilon > 0$ are fixed (given) constants. This means that if the exact value of the per capita
+income is $\mu$ then we want the estimate to be within an interval of $(1\pm\epsilon)\mu$  with probability at least $1-\delta$.
+ (In practice, typically, $\delta = 0.05$ and $\epsilon = 0.03$.)
+The goal is to determine a lower bound on the
+number of random samples needed to achieve such an estimate.
+
+Answer the following questions:
+\begin{enumerate}
+    
+\item Let $X$ be a random variable that associates with each person in a country his/her annual income. Assuming a uniform probability distribution over all the persons in the country,
+show that   $\mu = E[X]$ is the per capita income of the country.
+
+    \textbf{Answer:}
+
+\item Suppose you collect $t$ independent random samples $X_1,X_2, \dots X_t$.  We can consider $X_i$ as a random variable that denotes the income of the $i$th random sample. By independent random samples, we mean each sample is obtained by choosing each person independently with probability $1/P$, where
+$P$ is the total number of persons in the country. 
+We will use $\mu' =  (\sum_{i =1}^t X_i)/t$
+as our estimate of $\mu$.
+Show that $E[\mu'] = \mu$.
+
+    \textbf{Answer:}
+
+\item  We want to estimate $\mu$ to be within $\epsilon\mu$ (i.e., with margin of relative error $\epsilon$) from the true value of
+$\mu$ with probability at least $1-\delta$.  That is, we
+want $\Pr(\mu' \in [\mu - \epsilon\mu, \mu + \epsilon\mu]) \geq 1-\delta$.
+
+ Explain why we cannot use a Chernoff bound (as we did in class) to bound the probability that the estimate is within  $\epsilon \mu$ from the true value of $\mu$.
+
+    \textbf{Answer:}
+ 
+\item Suppose we know the standard deviation of $X$, $\sigma$. 
+Define $ r = \sigma/\mu$. (In practice, knowing a good upper bound on $r$ is enough, which can be obtained by having
+an upper bound on $\sigma$ and a lower bound on $\mu$). Show using Chebyshev's inequality that $O(r^2/(\epsilon^2\delta))$ samples are sufficient to estimate $\mu$ with the required parameters $\delta$ and $\epsilon$.
+
+    \textbf{Answer:}
+
+\item  Suppose that we need only a weak estimate that is within $\epsilon \mu$ margin  of $\mu$ with probability at least
+$3/4$. Argue that $O(r^2/\epsilon^2)$ samples are enough for this weak estimate.
+
+    \textbf{Answer:}
+
+\item Show that, by taking the median of $O(\log(1/\delta))$ weak estimates, we can obtain an estimate within
+$\epsilon \mu$ of $\mu$ with probability at least $1 - \delta$. Conclude that we need only
+$O(\frac{r^2}{\epsilon^2} \log (1/\delta))$ samples. Note that this is much smaller than the number of samples shown in item 4.
+
+    \textbf{Answer:}
+
+\end{enumerate}
+
+
+
+
+
+\section*{Problem 4}
+
+
+    Consider the following algorithm called~\nameref*{alg:goodselect} for finding the $\nth{k}$ smallest element
+    in a given array of $n$ (distinct) elements.
+    This algorithm is similar to Quicksort, where a pivot is chosen and the sets are partitioned based on the pivot. However, unlike Quicksort, we recurse only on one set.
+
+ The pivot is chosen as follows: we choose $3\ln n$ elements independently and uniformly at random from the set (the elements are sampled with replacement --- so the same element can be selected more than once). Then we sort
+    these $3\ln n$ elements (say, using Mergesort algorithm) and take the middle  element of this sorted set, i.e., the median. This median element is taken as the pivot. Then we partition the array about the pivot and recurse on the set that contains the $k$th smallest element.
+
+    \begin{algorithm}[H]
+        \caption[\AlgName{GoodSelect}]{\AlgName{GoodSelect}
+            \AlgInput{An array $S$ of $n$ distinct elements and the desired order statistic, $k$}
+            \AlgOutput{The value of the $\nth{k}$ order statistic}}\label{alg:goodselect}
+        \begin{algorithmic}[1]
+            \Function{GoodSelect}{$S$, $k$}
+            \If{$\card{S} \leq 3\ln n $}
+            \State Call MergeSort on $S$
+            \State \Return $S[k]$
+            \Else
+            \State $P\gets \textproc{RandomSample}(S, 3\ln n)$ \
+            \LComment{$P$ is a random sample (with replacement) of $3 \ln n$ elements.}
+            \State Call MergeSort on $P$.
+            \State $p\gets \textproc{Median}(P)$ \Comment{$p$ is the pivot.}
+            \State $S_1 \gets \set{x\in S \suchthat x < p}$
+            \State $S_2 \gets \set{x\in S \suchthat x > p}$
+            \If{$\card{S_1} \equalto k-1$}
+            \State \Return $p$
+            \ElsIf{$\card{S_1} > k$}
+            \State \Return $\Call{\nameref*{alg:goodselect}}{S_1, k}$
+            \Else
+            \State \Return $\Call{\nameref*{alg:goodselect}}{S_2, k - \card{S_1} - 1}$
+            \EndIf
+            \EndIf
+            \EndFunction
+        \end{algorithmic}
+    \end{algorithm}
+
+    
+Answer the following questions:
+    \begin{enumerate}
+    \item  Show the correctness of your algorithm, i.e., it indeed outputs the $k$th smallest element in $S$.
+    (Hint: Use induction.) 
+
+        \textbf{Answer:}
+        
+        \item Show that, with high probability, $p$ is a ``good'' pivot --- i.e., with high probability (say with probability at least $1-1/n^c$, for some constant $c>0$),  the sets $S_1$ and $S_2$ are approximately balanced, i.e., say, the sizes of both sets are at most $2|S|/3$.
+
+        \textbf{Answer:}
+        
+        \item Show that the running time (i.e., number of comparisons) of~\nameref*{alg:goodselect} is $\bigO{n}$ with high probability, i.e., with  $1-1/n^c$, for some constant $c>0$.
+
+        \textbf{Answer:}
+
+\item {\bf Use the above GoodSelect algorithm} to solve the following problem given in leetcode: $K$th Largest Element in an Array: \\
+\url{https://leetcode.com/problems/kth-largest-element-in-an-array/}
+
+If you do not implement the above GoodSelect  algorithm to solve the leetcode problem, then you will not get any points.
+
+Note that there may be some solutions posted on LeetCode that do not use this approach.  These are not acceptable solutions. Some solutions posted may also be wrong. In any case,
+if we find a solution that is largely copied from another solution (e.g., in a verbatim manner or just simply changing variable names) this will be violating academic dishonest policy.
+
+
+\begin{enumerate}[label=\textbf{(\alph*)}]
+    
+    
+          \item Create an account on \href{https://leetcode.com/}{LeetCode}.   
+           
+    \item  Code your solution in Python/C++/Java. Your code should be well commented. Your code should compile, otherwise no points. Do not copy your code or solution from other sources.
+    
+          \item Submit your code on your LeetCode account. LeetCode will automatically check your code and let you know if it is working correctly.
+   
+    \item Submit your code as part of this homework  (even if LeetCode does not accept it) and also submit a {\bf link to your LeetCode profile}. Say whether your code was accepted or not by LeetCode. We will also check whether your code was accepted by LeetCode, in case if you say so.
+\end{enumerate}
+
+\end{enumerate}
+
+
+\end{document}

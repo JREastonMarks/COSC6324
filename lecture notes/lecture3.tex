@@ -1,0 +1,90 @@
+\hrule
+\vspace{0.1in}
+\noindent
+\textbf{Lecture Topic: } Verification of Matrix Multiplication and Bayes Theorem\\
+\textbf{Lecture Date: }08/27/2024 \\
+\textbf{Scribe Authors: }Dhruv Trivedi, Jeremy Easton-Marks
+\vspace{0.1in}
+\hrule
+\vspace{0.1in}
+
+This lecture continued our work on the verification of matrix multiplication and discussed Miller Rabin. We also discussed Bayes Theorem
+
+\section*{Prime Number Testing}
+How do we efficiently test if $n$ is a prime number?
+
+We can calculate this naively by checking if it is divisible from range $2$ to $\sqrt{n}$. This is not a polynomial. We can use Miller Rabin's test to reduce the cost to $\bigO(\log^3n)$. This algorithm is still in use and relies upon randomization. \\
+
+Another algorithm that we can us is the AKS algorithm was created in 2021 which has an $\bigO(\log^{12}n)$. This algorithm is deterministic but is slightly slower.
+
+\begin{theorem}[Fermat's Little Theorem]
+A way of determining if a number $p$ is prime or not
+
+\begin{enumerate}
+\item If p is prime then it is correct. (mod p)
+\item If p is complement is $2^{\frac{1}{100}}$ (mod p) then p is prime.
+\end{enumerate}
+
+\end{theorem}
+
+\begin{theorem}[Fermat's Factorization Method]
+If $n=x^2 - y^2$ then $n=(x-y)(x+y)$
+
+\end{theorem}
+
+\section*{Miller Rabin's Test}
+Miller Rabin's test is based on Fermat's Little Theorem
+
+
+\[
+\forall 1 \geq a \geq n a^{n - 1} \equiv 1 (\mod n)
+\]
+
+The basic algorithm is to take a random number from the sample space $(1...n - 1)$. Mod the number and then square the number. Repeat this until the square of the mode is equal to mod then square.
+
+
+$\forall prime a \equiv 1 \mod n$ than
+$\sqrt{a} \equiv \pm 1 \mod n$
+
+
+\section*{Bayes Theorem}
+Given $a$ -> event is a is prime and $b$ -> event $N_R$ returns prime. We want to calculate probability of $A$ given $B$ or $Pr(A|B)$.
+
+\[
+\begin{aligned}
+Pr(A|B) & = \frac{Pr(A \cap B }{Pr(B)} \\
+Pr(A|B) & = \frac{Pr(B|A)Pr(A)}{Pr(B)} \\
+A(B) & = Pr(B|A)Pr(A) + Pr(B|A)Pr(B)
+\end{aligned}
+\]
+
+Prime Number Theorem -> For n apex have more are prime. $\frac{1}{2n(n)}$ primes
+
+\[
+\begin{aligned}
+Pr(A) & =\frac{1}{\ln} \\
+Pr(B) & =\frac{1}{2^1000} \\
+Pr(\bar{A}) & = 1 - \frac{1}{\ln}
+\end{aligned}
+\]
+
+\[
+\begin{aligned}
+& \frac{\frac{1}{\ln}}{ \frac{1}{\ln} + 2 ^{-100} ( 1 - \frac{1}{\ln} )} \\
+& \frac{1}{1+ 2^{-100}(\ln-1)} \\
+& \frac{1}{1+ 2^{-\log n}(\ln-1)} \\
+& \frac{1}{1+ \frac{1}{n}(\ln-1)} \\
+\end{aligned}
+\]
+
+\section*{Min Cut Problem -> Karger's Algorithm}
+Given a graph $G$ find the least number of cuts to break a graph in $\frac{1}{2}$.
+
+$m \in M$ where $M$ is Edges \\
+$n \in N$ where $N$ is Nodes
+
+A deterministic algorithm takes $O(mn)$ while a random sampling can reach $0(n^2\log^3n\lim(n))$.
+
+Karger's Algorithm allows multi-edges and random sampling.
+
+$Pr($min cut is output$)$ what is the success probability

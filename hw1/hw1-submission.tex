@@ -1,0 +1,415 @@
+\documentclass[11pt]{article}
+\usepackage{scribe}
+\usepackage{tikz}
+
+\usetikzlibrary{external}
+
+\date{}
+
+\begin{document}
+\title{ COSC 6324 Homework 1}
+\author{Jeremy R. Easton-Marks, Dhruv Jitendra Trivedi \\
+ }
+
+ \maketitle
+
+\section*{Contributions}
+Both the authors have contributed equally, along side thoroughly reviewing and refining each others' work.
+
+In particular:
+\begin{itemize}
+    \item \emph{Jeremy R. Easton-Marks} has worked on problems 1.1, 1.2, 2.1, 3.5.
+    \item \emph{Dhruv Jitendra Trivedi} has worked on problems 2.2, 3.1, 3.2, 3.3, 3.4, and 4.
+\end{itemize}
+
+\section*{Problem 1}
+
+\begin{enumerate}
+\item You want to choose a random element among a set of $n$  elements given in an array $A$ with indices from 
+0 to $n-1$. You have access to a unbiased random coin which gives HEADS or TAILS with equal probability each time you access it. Show how to use the coin
+to select a random element in the array and prove that it yields a random element. How many coin accesses are needed? Justify your answer.
+
+% \textbf{Answer:} We are given an array $A$ of $n$ elements that are indexed from 0 to $n - 1$. We are also given an unbiased random coin that can return HEADS or TAILS. We assign values to the two possible outcomes $HEADS = 1$ and $TAILS = 0$. We will use this coin to choose a random element in the array using a set number of flips. To do this we convert the total number of elements into a binary representation $k$.
+
+% \[
+% k=\log_2 n
+% \]
+
+% We will now flip the unbiased coin $k$ times with each flip $E_i$ representing a position in $b$ such that $b_i = E_i$. After flipping the coin $k$ times we can convert that number back to the position $p$.
+% \[
+% p = \log_(10) b
+% \]
+
+% This position can then be use to choose an element from array $A$. We show that this is a random number as each position in $b$ is an independent random event. We know this is random as choosing $\bar{r}= (r_1,r_2,...r_n) \in {0, 1}$ is equivalent to choosing each $r_i$, independently and uniformly from ${0, 1}$. The probability of a coin flip is 
+
+% \[
+% Pr(E_i) = \frac{1}{2}
+% \]
+
+
+
+% Since each event (Coin Flip) are mutually independent then the total probability is 
+% \[
+%     \Pr(\bigcup_{i = 1}^{k} E_i)
+% \]
+% \[
+%     Pr(E)=\prod_{i=0}^{k}Pr(E_i)
+% \]
+
+% Then the probability of all coin flips is
+
+% \[
+% \boxed{\therefore{Pr(E)=\frac{1}{2}^k}}
+% \]
+
+    \textbf{Answer:}
+    We are given an array \(A\) of \(n\) elements, indexed from \(0\) to \(n - 1\), along with an unbiased random coin that gives HEADS or TAILS with equal probability. The task at hand is to choose a random element index, say \(i\), from the array \(A\) with the help of the aforementioned coin.
+
+    Assuming that \(n\) is less than or equal to a power of two, we can represent \(n\) using \(k\) bits such that:
+
+    \[
+        k = log_{2}n
+    \]
+
+    Let us also assign the values 1 and 0 to HEADS and TAILS, respectively, so as to use the coin for representing binary bits. We now toss the coin \(k\) times to generate individual bits of the random element index \(i\). 
+
+    Mathematically, let us decompose \(i\) into individual bits:
+    \[
+        i = \quad i_n \quad i_{n - 1} \quad \dots \quad i_0
+    \]
+    ...as each individual bit is chosen through the given unbiased random coin, it has an equal probability
+    \[
+        \Pr[i_j] = \frac{1}{2}
+    \] for \(j\) in the range \([0, n - 1]\)
+    then, we can say that
+    \[
+        \Pr[i] = \bigcup_{j = 0}^{n - 1}\Pr[i_j]
+    \]
+    %\[
+    %    \Pr[i] = \frac{n}{2}
+    %\]
+
+    The aforementioned process generates a random element index \(i\) in the range \([0, n - 1]\) with equal probability, as each bit is generated independently and uniformly (since the coin is unbiased).
+
+    Altogether, we would need \(k = log_{2}n\) coin accesses to generate a candidate index element (as the random element index \(i\) needs to be between \(0\) and \(n - 1\), and \(n\), which is to be generated through random coin tosses).
+
+\item You play the following game, which consists of many rounds. In each round, you draw a random number from 1 to 100.  
+You play the game for 50 rounds. In each round, you draw a random number from 1 to 100 independently of other rounds. 
+At the end of 50 rounds, you compute the sum of all the numbers you obtained in your draws.  
+
+If this sum is a multiple of 10 then you win \$1000 dollars.  What is the probability of you winning the money?
+
+(Hint: Use the principle of deferred decisions, and consider the situation when you draw the last number.) 
+
+\textbf{Answer:} To calculate the probability that the sum of the numbers is equal to a multiple of 10 we need to only look at the number in the first position in the sum which must be equal to 0. We can therefor simplify our search to only the digit in the first position and establish if it is equal to 0 or not. To establish what 2 numbers when added together will leave a 0 in the ones position as set $S$. 
+
+\[
+S = [\{0,0\}, \{1,9\}, \{2,8\}, \{3,7\}, \{4,6\}, \{5, 5\}, \{6,4\}, \{7,3\}, \{8,2\}, \{9,1\}]
+\]
+
+Giving us $|S| = 10$ total possibilities
+
+The total probability of all numbers is $10^2$ then the total possibilities is $\frac{10}{100}$ or $\frac{1}{10}$ for the sum to be a multiple of 10.
+
+Since we care only about the final sum we can use the principal of deferred decisions and ignore all previous events. We only need to know the sum of the numbers at the end of round 49. So the probability of ending up with a final sum of 10 is $\frac{1}{10}$. Thus the total probability is $\frac{1}{10}$
+
+\end{enumerate}
+
+
+\section*{Problem 2} 
+
+\begin{enumerate}
+\item Assume that $n$ people are going to a concert and there are  exactly $n$ seats. 
+All the people are lined up in some arbitrary order.  Each person has a ticket that assigns
+a unique seat number.
+The first person in the line, unfortunately, has lost his ticket and does not remember his seat number.
+Hence, he is asked to take a random seat (i.e., a seat chosen uniformly
+among the 1000 seats). The rest of the people are advised to take their (own) respective seat numbers according
+to their ticket (all the rest have their tickets); if any of them finds that their assigned seat is already taken, then they are advised to choose a random seat among the (currently) unoccupied seats. What is the probability that the last person sits on his own seat (assigned to him in his ticket) ?
+
+(Hint: Let $p(n)$ be the desired probability assuming $n$ people. It is easy to compute $p(2)$. Using $p(2)$, compute $p(3)$. This will give you an idea of how to  set up a recurrence to compute $p(n)$.)
+
+\textbf{Answer:}
+Let's first solve this problem for simpler scenarios.
+
+if $n=2$ then we can imagine the first person either choosing their seat or the other seat or a $\frac{1}{2}$ change of choosing their seat. The last person in this scenario will either end up in their seat if the first person chose the correct seat or in a different seat if the first person chose the wrong seat. Thus they have a $\frac{1}{2}$ chance of being in the right seat.
+\[
+p(2) = \frac{1}{2}
+\]
+
+If $n=3$ we end up with
+
+\[
+p(3) = \frac{1}{3} + (\frac{1}{3} * p(2)) = \frac{1}{2}
+\]
+
+We can generalize the above two problems to solve all scenarios by breaking the problem into three different components. For each new seat we are decreasing the chance that the first person ends up in their own seat which we represent with $\frac{1}{n}$. We now have $n-1$ seats left, which we can calculate recursively thus $p(n-1)$. However we don't want to include the scenarios where the first person has chosen the right seat or the seat of the last person when we calculate recursively so we need to multiply that number by $\frac{n - 2}{n}$. This leaves us with $\frac{n-2}{n} *p(n-1)$
+
+Thus for all scenarios where $n>2$
+\[
+p(n) = \frac{1}{n} + \left[\frac{n - 2}{n}*p(n-1)\right]
+\]
+
+Furthermore, using the principle of deferred decisions, it is evident that for the problem at hand, i.e., the probability that the last person sits on his own seat just narrows down to two outcomes --- the last person gets:
+
+\begin{enumerate}
+    \item their own seat
+    \item someone else's seat
+\end{enumerate}
+
+With this, we can calculate the probability as:
+\[\Pr[last\ person\ gets\ their\ own\ seat] = \frac{1}{2}\]
+
+\item You are given a circle of some radius and assume that 24\% of its circumference is colored blue
+and the rest is colored red.  Show that regardless of how the colors are distributed, you can \textbf{always}  inscribe a square inside the circle such that
+all the vertices of the square are colored red.  (Hint: Argue using union bound.)
+
+    \textbf{Answer:}
+    We are given a circle \(C\) of some radius, say, \(R\). 24\% of its circumference is colored blue, and the remaining 76\% is colored red.
+
+    The problem at hand is to inscribe a square \(S\) inside \(C\) such that all the vertices of \(S\) are colored red, i.e., all four points of \(S\) lie in the region that is colored red.
+
+    This mathematically translates to the fact that vertices of \(S\) (say, \(V_1\), \(V_2\), \(V_3\), and \(V_4\)) can only accommodate 76\% of \(C\)'s circumference, as the remaining 24\% is colored blue. Let us then define a contradictory event, which calculates the probability that a vertex of \(S\) accommodates 24\% of \(C\)'s circumference --- otherwise, the probability of failure.
+
+        \[
+            E_i = Vertex \ V_i \ accommodates \ 24\% \ of \ C
+        \]
+
+    Which then implies:
+
+        \[
+            \Pr[E_i] = \frac{24}{100} = 0.24
+        \]
+
+    Then, \(E_1\) \dots \(E_4\) can be defined using the above formulation for the vertices \(V_1\) \dots \(V_4\). We may then use union bound to calculate the joint probability of failure, i.e., either of the vertices of \(S\) accommodate 24\% of \(C\) --- the blue part:
+
+        \[
+            \Pr(\bigcup_{i = 1}^{4} E_i) \leq \sum_{i = 1}^{4} \Pr(E_i)
+        \]
+
+        \[
+            \Pr(\bigcup_{i = 1}^{4} E_i) \leq \Pr(E_1) + \Pr(E_2) + \Pr(E_3) + \Pr(E_4)
+        \]
+
+        \[
+            \Pr(\bigcup_{i = 1}^{4} E_i) \leq 0.24 + 0.24 + 0.24 + 0.24
+        \]
+
+        \[
+            \Pr(\bigcup_{i = 1}^{4} E_i) \leq 0.96
+        \]
+
+        \[
+            1 - \Pr(\bigcup_{i = 1}^{4} E_i) \leq 0.04
+        \]
+
+        \[
+            \boxed{\therefore 1 - \Pr(\bigcup_{i = 1}^{4} E_i) > 0}
+        \]
+
+    The above result formally shows that there always exists a configuration of vertices \(V_1\) \dots \(V_4\) such that they always accommodate 76\% of \(C\)'s circumference, i.e., they are colored red.
+        
+\end{enumerate}
+
+\section*{Problem 3}
+
+We recall Rabin's protocol for Byzantine agreement discussed in class. In the Byzantine agreement problem there are $n = 3f+1$ processors out of which at most $f$ of them can be Byzantine (faulty). The non-Byzantine processors are called good or honest.  Each processor $i$, $1 \leq i \leq n$, starts with an input bit $b_i$. The goal of Byzantine agreement is for all processors to output a bit $o_i$
+such that the following conditions are met: (1) Agreement: $o_i$ is the same for all good processors $i$.
+(2) Validity: If the input bit is the same for all good processors, then the output bit should be equal to this input bit.
+(3) Termination: All good processors should output $o_i$ and terminate.
+
+
+Rabin's protocol assumes a trusted external party that supplies a shared random coin in each step that is available to all processors (if they need it). Note that in each step the random coin is independently generated with equal probability of being HEADS or TAILS.
+
+The protocol is as follows:
+
+
+Each processor $i$ ($1\leq i \leq n$) maintains at all rounds a vote $v_i$ which is initially equal to its input bit $b_i$. 
+
+At the start of each communication round, each processor sends its vote value $v_i$
+to every other processor. Each processor examines all $3t + 1$ values of votes
+it received (including its own). 
+Let $m_i$ be the majority bit among
+the values received by processor $i$. Let $n_i$ be the number of times the majority bit $m_i$ occurs among
+the vote values received. We note that the values of $m_i$ and $n_i$ can be different for different good processors since  Byzantine processors could try to confuse things
+by sending different values of votes to different processors.
+
+Depending upon the value of $n_i$ 
+processor $i$ does the following:
+\begin{itemize}
+\item If $n_i \geq 2f+1$: Set  $v_i = m_i$.
+\item If $n_i \leq 2f$: See the value of the shared random coin. \\ If it is HEADS then
+set $v_i = 1$, else set $v_i  = 0$.
+\end{itemize}
+
+Answer the following.
+
+\begin{enumerate}
+    \item Show that if all good processors have the same vote value in any round (i.e., $v_i $ is the same for all $i$), then in all subsequent rounds, $v_i$ will not change for any good processor (thus the vote has ``converged'').
+
+    \textbf{Answer:}
+    Let us assume that in a given round, say \(r\), all good processors have the same vote value, i.e., \(v_i = v\) for all good processors \(i\), where \(v\) is some common bit (either 0 or 1).
+
+    In the subsequent round, each good processor will send its vote v to every other processor. Since the total number of processors is \(n = 3f + 1\), and there are at most \(f\) Byzantine processors, each good processor will receive at least \(2f + 1\) votes with value \(v\).
+
+    As per the given protocol, if a processor receives at least \(2f + 1\) votes with the same majority bit, it will set its vote \(v_i\) to this majority bit, say \(m_i\). Since all good processors receive at least \(2f + 1\) votes with the same value \(v\), they will all, in turn, set their individual vote \(v_i\) to \(v\).
+
+    Thus, once all good processors agree on a vote in one round, they will continue to have the same vote value in all subsequent rounds. %To conclude, if all good processors have the same vote value, say \(v\), in any round, they will not change their vote value in future rounds --- the system has reached agreement and "converged".
+    
+    \item Show that for any two processors $i$ and $j$ that have $n_i \geq 2f+1$ and $n_j \geq 2f+1$ in some round, will
+    set $v_i=m_i = m_j = v_j$ in this round. 
+
+    \textbf{Answer:} 
+
+    Let us consider two good processors \(i\) and \(j\) in a given round. Suppose \(n_i \geq 2f + 1\) and \(n_j \geq 2f + 1\), where \(n_i\) and \(n_j\) are the number of votes corresponding to the majority bits \(m_i\) and \(m_j\) received by processors \(i\) and \(j\), respectively.
+
+    In accordance with the protocol, each processor receives \(n = 3f + 1\) votes, out of which at least \(2f + 1\) are from good processors, as there are at most \(f\) Byzantine processors. Therefore, both processors \(i\) and \(j\) receive at least \(2f + 1\) matching votes from good processors.
+
+    Since \(i\) and \(j\) both receive at least \(2f + 1\) matching votes, and these \(2f + 1\) votes must overlap by at least \(f + 1\) votes from good processors, it follows that both processors \(i\) and \(j\) must have the same majority bits, i.e., \(m_i = m_j\).
+
+    Thus, both processors \(i\) and \(j\) will set their votes \(v_i = v_j = m_i = m_j\). %To conclude, if both processors \(i\) and \(j\) receive at least \(2f + 1\) votes for their majority bits, then they will set their votes to the same value in that round.
+    
+    \item Using 1 and 2 above, show that the probability that all good processors set the same vote value at the end of a round is at least $1/2$.
+
+    \textbf{Answer:}
+
+    We know from the aforementioned result that, if all good processors have \(n_i \geq 2f + 1\), they will all set their votes to the same value.
+
+    However, if some processors have \(n_i \leq 2f\), then they must rely on the shared random coin to decide their vote. This random coin flip is fair, i.e., it results in HEADS (vote \(v_i = 1\)) with probability \(\frac{1}{2}\) and TAILS (vote \(v_i = 0\)) with probability \(\frac{1}{2}\).
+
+    In any round where some good processors have \(n_i \leq 2f\), the random coin flip ensures that all such processors will set their votes to the same random bit (either 0 or 1).
+
+    Therefore, the probability that all good processors set the same vote value at the end of a round is at least \(\frac{1}{2}\), since:
+    
+    \begin{itemize}
+        \item EITHER they will have \(n_i \geq 2f + 1\) and agree on the majority bit
+
+        \item OR they will follow the shared random coin and agree with probability \(\frac{1}{2}\)
+    \end{itemize}
+    
+    %To conclude, the probability that all good processors set the same vote value at the end of a round is at least \(\frac{1}{2}\).
+    
+    \item Using 3, show that if a good processor sets its output bit $o_i = v_i$ after executing $\log n$ rounds, then the Byzantine agreement will be correct with probability at least $1-1/n$.
+
+    \textbf{Answer:}
+
+    Let us consider a processor wherein \(log\emph{n}\) rounds have already passed within the protocol. We know from the aforementioned result, that the probability that all good processors set the same vote value in any given round is at least \(\frac{1}{2}\).
+
+    A simple contradictory approach tells us that after one round, the probability that all good processors disagree (or agree, in this case) is \(\frac{1}{2}\). After two rounds, the probability that all good processors have disagreed in both rounds is \(\frac{1}{2} \times \frac{1}{2} = \frac{1}{4}\). More generally, after \(k\) rounds, the probability that all good processors have disagreed in these rounds is \((\frac{1}{2})^{k}\).
+
+    Therefore, after \(log\emph{n}\) rounds, the probability that all good processors have disagreed is \((\frac{1}{2})^{log\emph{n}} = \frac{1}{n}\).
+
+    Thus, the probability that all good processors agree after \(log\emph{n}\) rounds is \(1 - \frac{1}{n}\). %To conclude, if each good processor sets its output bit after \(log\emph{n}\) rounds, the Byzantine agreement will be correct with a probability of at least \(1 - \frac{1}{n}\).
+    
+    \item Show how the nodes can detect that an agreement has been reached and then terminate. This will make the algorithm Las Vegas (i.e., always correct). What is the expected number of rounds needed for the algorithm to terminate?
+
+    \textbf{Answer:}
+    The algorithm can be changed so that the nodes detect that they have reached consensus by making a change in the algorithm. We will exit the loop if we detect that there are greater than or equal to $2f + 1$ votes with the same value $v$.
+
+    \emph{Expected Number of Rounds:}
+    We know from \textit{result 3}, that the probability of agreement in any round is at least \(\frac{1}{2}\). Since the probability of agreement is \(\frac{1}{2}\) in each round, the number of rounds follows a geometric distribution with success probability \(\frac{1}{2}\).
+
+    The expected number of rounds to reach agreement is thus the expectation of a geometric random variable with success probability \(\frac{1}{2}\), which is:
+
+    \[
+        E[rounds] = \frac{1}{\frac{1}{2}} = 2
+    \]
+    
+\end{enumerate}
+
+
+
+
+\section*{Problem 4}
+
+This problem occurs  when searching
+for data in a computer network. Your  network consists of $n$
+nodes (computers) and each node would like to search for a data
+item as fast as possible. Assume that searching one node takes
+constant time; thus searching $i$ nodes will take $\Theta(i)$
+time. If the data item is stored in only one (arbitrary) node
+searching for it will take $\Theta(n)$
+ time, since the searching node will have to examine at
+least half of the nodes on average to find the item. (Note that we
+assume that the searching node does not know a priori  in which
+node the item is stored.) To speed up search we can use the
+technique of {\em replication}, i.e., a data item is replicated
+and stored in $k$ ($\leq n$) different nodes. If we replicate an
+item at all the $n$ nodes then search will take only constant
+time, but this strategy is costly in terms of storage space ---
+storing at one node takes constant space for a total of  $O(n)$
+storage space. Thus there is a trade-off between search time and
+storage space. Your goal is to find a storage and search strategy
+that balances both search time and storage space: each item should
+be replicated in $\Theta(k)$ nodes, while searching for an item
+should take $\Theta(k)$ time on the average (in other words,
+$\Theta(k)$ expected time). What is the best strategy and what is
+its   $k$ value (as a function of $n$). Analyze and show that your
+strategy balances both search time and storage space.  (Hint: A
+simple randomized search strategy will work.)\\
+
+    \textbf{Answer:}
+    The task at hand is to balance the search time and storage space in a network of \(n\) nodes, where each node wants to search for a data item as efficiently as possible. The data item can be replicated across \(k\) nodes, and we thus aim to find an optimal value for \(k\) that balances both search time and storage space.
+
+    \emph{Search time:} Assume that the data is replicated across \(k\) nodes, where \(k \leq n\). Then, a search strategy may be proposed as follows:
+    
+    \begin{itemize}
+        \item A node searches for the data item by randomly selecting nodes to check.
+
+        \item The probability of finding the data item at any randomly selected node is $\frac{k}{n}$, as the data item is stored in \(k\) out of \(n\) nodes.
+    \end{itemize}
+
+    To find the expected number of nodes that must be searched before locating the item, we can model the aforementioned as a geometric random variable. Then, we have:
+
+        \[
+            E[search\ time] = \frac{n}{k}\\
+        \] \null\hfill --- result 1\\
+
+    i.e., the expected search time is proportional to $\frac{n}{k}$.
+
+    \emph{Storage space:} The storage requirement is directly proportional to the number of nodes that store the item. If the data is replicated in \(k\) nodes, then the total storage space required is:
+
+        \[
+            Storage\ space = O(k)\\
+        \] \null\hfill --- result 2\\
+
+    Now, using results \(1\) and \(2\), let us compare both the search time and the storage space:
+
+        \[
+            \frac{n}{k} = k\\
+        \]
+
+        \[
+            k^{2} = n
+        \]
+        
+        \[
+            \therefore k = \sqrt{n}\\
+        \] \null\hfill --- result 3\\
+
+    Analyzing result \(3\), we have:
+
+    \begin{itemize}
+        \item \textbf{Search time:} With \(k = \sqrt{n}\), the expected search time becomes:
+
+            \[
+                E[search\ time] = \frac{n}{k} = \frac{n}{\sqrt{n}} = \sqrt{n}
+            \]
+
+        So, the search time is $\Theta(\sqrt{n})$
+
+        \item \textbf{Storage space:} The storage space for \(k = \sqrt{n}\) is:
+
+            \[
+                O(k) = O(\sqrt{n})
+            \]
+
+        So, the storage space is $\Theta(\sqrt{n})$
+    \end{itemize}
+
+    The optimal strategy is to replicate the data item across \(k = \sqrt{n}\) nodes. The strategy thus proposed in result \(3\) balances both search time and storage space, as both scale with $\Theta(\sqrt{n})$. Thus, replicating the data in \(k = \sqrt{n}\) nodes is the best strategy.
+
+\end{document}
+
+
+
